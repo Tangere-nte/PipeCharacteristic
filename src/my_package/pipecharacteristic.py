@@ -6,7 +6,7 @@ Date: 2025-04-03
 """
 
 from dataclasses import dataclass
-
+from typing import Tuple
 import numpy as np
 
 IArray2D = np.ndarray  # Int numpy array 2D
@@ -25,7 +25,7 @@ class SummarizeResult1:
     There are 4 keys: sources, junctions, sinks, and all.
     """
 
-    def __init__(self, **kwargs: tuple["FArray", "FArray"]) -> None:
+    def __init__(self, **kwargs: Tuple["FArray", "FArray"]) -> None:
         for key, (pressure_value, flow_value) in kwargs.items():
             setattr(
                 self,
@@ -180,7 +180,7 @@ class SummarizeResult2:
     There are 4 keys: sources, junctions, sinks, and all
     """
 
-    def __init__(self: object, **kwargs: tuple[FArray, FArray]) -> None:
+    def __init__(self: object, **kwargs: Tuple[FArray, FArray]) -> None:
         for key, b_value in kwargs.items():
             setattr(self, key, b_value)
 
