@@ -6,8 +6,8 @@ IArray2D = np.ndarray  # Int numpy array 2D
 FArray = np.ndarray  # Float numpy array
 
 # Constant setting
-density = 700.0  # unit: kg/m^3
-gravitational_accel = 9.81  # unit: m/s^2
+DENSITY = 700.0  # unit: kg/m^3
+GRAVITATIONAL_ACCEL = 9.81  # unit: m/s^2
 k = 2.0  # empirical parameter
 
 
@@ -113,9 +113,9 @@ def calculate_p_flow(
                                     kilogram per second.
 
     Constant args:
-        density (float)             : density of fluid in kilogram per cubic
+        DENSITY (float)             : DENSITY of fluid in kilogram per cubic
                                         meters.
-        gravitational_accel (float) : gravitational acceleration in meter per
+        GRAVITATIONAL_ACCEL (float) : gravitational acceleration in meter per
                                         square seconds.
         k (float)                   : constant exponential of flow to determine
                                         the effect to friction (dimensionless
@@ -135,11 +135,10 @@ def calculate_p_flow(
     num_sinks = p_sinks.size
     num_edges = edge_indices[0].size
 
-    flows = calculate_flow_from_sources(
-        flow_sources,
-        num_vertices,
-        edge_indices,
-    )
+    flows = calculate_flow_from_sources(flow_sources, 
+                                        num_vertices, 
+                                        edge_indices,
+                                        )
 
     # Assign the sinks' pressure
     ps = np.zeros(num_vertices)
@@ -153,17 +152,17 @@ def calculate_p_flow(
         # P_init = P_target + rho g (h_target - h_init) - Bij * fij ^ k
         ps[idx_init] = (
             ps[idx_target]
-            + density * gravitational_accel * (diff_height)
+            + DENSITY * GRAVITATIONAL_ACCEL * (diff_height)
             - bs[edge_idx] * (flows[idx_init]) ** k
         )
 
     return SummarizeResult1(
         sources=(ps[:num_sources], flows[:num_sources]),
         junctions=(
-            ps[num_sources : num_vertices - num_sinks],
-            flows[num_sources : num_vertices - num_sinks],
+            ps[num_sources:num_vertices - num_sinks],
+            flows[num_sources:num_vertices - num_sinks],
         ),
-        sinks=(ps[num_vertices - num_sinks :], flows[num_vertices - num_sinks]),
+        sinks=(ps[num_vertices - num_sinks:], flows[num_vertices - num_sinks]),
         all=(ps, flows),
     )
 
@@ -209,9 +208,9 @@ def calculate_pipe_characteristic(
                                     kilogram per second.
 
     Constant args:
-        density (float)             : density of fluid in kilogram per cubic
+        DENSITY (float)             : DENSITY of fluid in kilogram per cubic
                                         meters.
-        gravitational_accel (float) : gravitational acceleration in meter per
+        GRAVITATIONAL_ACCEL (float) : gravitational acceleration in meter per
                                         square seconds.
         k (float)                   : constant exponential of flow to determine
                                         the effect to friction
@@ -228,7 +227,9 @@ def calculate_pipe_characteristic(
     num_edges = edge_indices[0].size
 
     # Calculate the rest flows
-    flows = calculate_flow_from_sources(flow_sources, num_vertices, edge_indices)
+    flows = calculate_flow_from_sources(flow_sources, 
+                                        num_vertices, 
+                                        edge_indices,)
 
     # Solving for Pipe Characteristics
     bs = np.zeros(num_edges)
@@ -240,12 +241,12 @@ def calculate_pipe_characteristic(
         bs[edge_idx] = (
             p_s[idx_target]
             - p_s[idx_init]
-            - density * gravitational_accel * (diff_height)
+            - DENSITY * GRAVITATIONAL_ACCEL * (diff_height)
         ) / (flows[idx_init]) ** k
 
     return SummarizeResult2(
         sources=bs[:num_sources],
-        junctions=bs[num_sources : num_vertices - num_sinks],
-        sinks=bs[num_vertices - num_sinks :],
+        junctions=bs[num_sources:num_vertices - num_sinks],
+        sinks=bs[num_vertices - num_sinks:],
         all=bs,
     )
