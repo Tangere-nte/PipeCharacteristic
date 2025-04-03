@@ -1,0 +1,6 @@
+projectKey=PipeCharacteristic
+serverUrl=http://localhost:9000
+serverVersion=25.3.0.104237
+dashboardUrl=http://localhost:9000/dashboard?id=PipeCharacteristic
+ceTaskId=030b4dea-c1c0-4007-a2f4-654500745b4b
+ceTaskUrl=http://localhost:9000/api/ce/task?id=030b4dea-c1c0-4007-a2f4-654500745b4b
