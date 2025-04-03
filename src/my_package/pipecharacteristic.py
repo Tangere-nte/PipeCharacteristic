@@ -6,7 +6,7 @@ Date: 2025-04-03
 """
 
 from dataclasses import dataclass
-from typing import Any
+
 import numpy as np
 
 IArray2D = np.ndarray  # Int numpy array 2D
