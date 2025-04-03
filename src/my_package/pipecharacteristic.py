@@ -6,7 +6,7 @@ Date: 2025-04-03
 """
 
 from dataclasses import dataclass
-
+from typing import Any
 import numpy as np
 
 IArray2D = np.ndarray  # Int numpy array 2D
@@ -22,10 +22,10 @@ k = 2.0  # empirical parameter
 class SummarizeResult1:
     """
     Object to match "key" and "value: (pressures, flows)"
-    There are 4 keys: sources, junctions, sinks, and all
+    There are 4 keys: sources, junctions, sinks, and all.
     """
 
-    def __init__(self: object, **kwargs: tuple[FArray, FArray]) -> None:
+    def __init__(self, **kwargs: tuple["FArray", "FArray"]) -> None:
         for key, (pressure_value, flow_value) in kwargs.items():
             setattr(
                 self,
@@ -33,15 +33,14 @@ class SummarizeResult1:
                 self.SubObject(pressures=pressure_value, flows=flow_value),
             )
 
+    @dataclass
     class SubObject:
         """
-        Suboject to split pressures and flows to .pressures and
-        .flows respectively
+        SubObject to split pressures and flows into .pressures and .flows.
         """
 
-        def __init__(self: object, **kwargs: tuple[FArray, FArray]) -> None:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+        pressures: FArray
+        flows: FArray
 
 
 def calculate_flow_from_sources(
