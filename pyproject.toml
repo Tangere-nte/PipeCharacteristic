@@ -1,0 +1,20 @@
+[project]
+name = "my-packages"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Krit Tangsongcharoen",email = "t.krit@thegang.tech"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy (>=2.2.4,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "my_package", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
