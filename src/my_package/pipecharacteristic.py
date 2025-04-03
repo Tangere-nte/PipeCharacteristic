@@ -142,8 +142,8 @@ def calculate_p_flow(
     num_sinks = p_sinks.size
     num_edges = edge_indices[0].size
 
-    flows = calculate_flow_from_sources(flow_sources, 
-                                        num_vertices, 
+    flows = calculate_flow_from_sources(flow_sources,
+                                        num_vertices,
                                         edge_indices,
                                         )
 
@@ -234,8 +234,8 @@ def calculate_pipe_characteristic(
     num_edges = edge_indices[0].size
 
     # Calculate the rest flows
-    flows = calculate_flow_from_sources(flow_sources, 
-                                        num_vertices, 
+    flows = calculate_flow_from_sources(flow_sources,
+                                        num_vertices,
                                         edge_indices,)
 
     # Solving for Pipe Characteristics
