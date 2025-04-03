@@ -1,3 +1,10 @@
+"""
+This module provides functionality for pipe characteristics.
+
+Author: Krit Tangsongcharoen
+Date: 2025-04-03
+"""
+
 from dataclasses import dataclass
 
 import numpy as np
